@@ -53,6 +53,7 @@
             this.buttonHEX = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // backSpace
@@ -347,15 +348,23 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(36, 35);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 26);
+            this.label1.Size = new System.Drawing.Size(0, 26);
             this.label1.TabIndex = 50;
-            this.label1.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(36, 158);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(0, 26);
+            this.label2.TabIndex = 51;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(687, 760);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonHEX);
@@ -417,6 +426,7 @@
         private System.Windows.Forms.Button buttonHEX;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 
