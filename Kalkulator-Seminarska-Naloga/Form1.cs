@@ -1,10 +1,10 @@
-﻿using Microsoft.CSharp;
-using System;
+﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Button = System.Windows.Forms.Button;
+using Microsoft.CSharp;
 
 namespace Kalkulator_Seminarska_Naloga
 {
@@ -53,10 +54,11 @@ namespace Kalkulator_Seminarska_Naloga
                     label1.Text = result + operation;
                     execute = true;
                 }
-            }catch(Exception w)
+            }
+            catch (Exception w)
             {
                 label2.Text = "";
-                label2.Text+=w.Message;
+                label2.Text += w.Message;
             }
 
         }
@@ -89,7 +91,7 @@ namespace Kalkulator_Seminarska_Naloga
             else
             {
                 label1.Text = "";
-                if(textBox1.Text.Last() == '=')
+                if (textBox1.Text.Last() == '=')
                     label1.Text += Evaluate(textBox1.Text.Substring(0, textBox1.Text.Length - 1));
                 else
                     label1.Text += Evaluate(textBox1.Text);
@@ -164,6 +166,28 @@ namespace Kalkulator_Seminarska_Naloga
 
             // invoke the method and return the result
             return (double)method.Invoke(null, null);
+        }
+
+        private void buttonFile_Click(object sender, EventArgs e)
+        {
+            // specify the file path
+            string filePath = "C:\\Users\\mihap\\OneDrive\\Dokumenti\\School\\Programiranje\\Kalkulator-Seminarska-Naloga\\Kalkulator-Seminarska-Naloga\\Primer datoteke za računanje števil.txt";
+
+            // open the file using a StreamReader
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                // read the file line by line
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    textBox1.Text = line;
+                    label1.Text += " ";
+                    if (textBox1.Text.Last() == '=')
+                        label1.Text += Evaluate(textBox1.Text.Substring(0, textBox1.Text.Length - 1));
+                    else
+                        label1.Text += Evaluate(textBox1.Text);
+                }
+            }
         }
     }
 }

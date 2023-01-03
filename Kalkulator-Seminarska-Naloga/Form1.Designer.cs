@@ -54,6 +54,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.buttonFile = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // backSpace
@@ -359,11 +360,24 @@
             this.label2.Size = new System.Drawing.Size(0, 26);
             this.label2.TabIndex = 51;
             // 
+            // buttonFile
+            // 
+            this.buttonFile.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonFile.Location = new System.Drawing.Point(42, 718);
+            this.buttonFile.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonFile.Name = "buttonFile";
+            this.buttonFile.Size = new System.Drawing.Size(604, 65);
+            this.buttonFile.TabIndex = 52;
+            this.buttonFile.Text = "FROM FILE";
+            this.buttonFile.UseVisualStyleBackColor = true;
+            this.buttonFile.Click += new System.EventHandler(this.buttonFile_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(687, 760);
+            this.ClientSize = new System.Drawing.Size(687, 796);
+            this.Controls.Add(this.buttonFile);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
@@ -427,6 +441,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button buttonFile;
     }
 }
 
