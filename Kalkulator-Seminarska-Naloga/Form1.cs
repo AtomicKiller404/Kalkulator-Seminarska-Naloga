@@ -21,6 +21,7 @@ namespace Kalkulator_Seminarska_Naloga
         double result = 0;
         string operation = "";
         bool execute = false;
+        bool ex = false;
 
         public Form1()
         {
@@ -33,6 +34,7 @@ namespace Kalkulator_Seminarska_Naloga
                 textBox1.Clear();
             textBox1.Text += (sender as Button).Text;
             execute = false;
+            ex = true;
         }
 
         private void operator_click(object sender, EventArgs e)
@@ -46,6 +48,7 @@ namespace Kalkulator_Seminarska_Naloga
                     result = Double.Parse(textBox1.Text);
                     label1.Text = result + operation;
                     execute = true;
+                    ex = true;
                 }
                 else
                 {
@@ -53,6 +56,7 @@ namespace Kalkulator_Seminarska_Naloga
                     result = Double.Parse(textBox1.Text);
                     label1.Text = result + operation;
                     execute = true;
+                    ex = true;
                 }
             }
             catch (Exception w)
@@ -65,7 +69,7 @@ namespace Kalkulator_Seminarska_Naloga
 
         private void button18_Click(object sender, EventArgs e)
         {
-            if (execute)
+            if (ex)
             {
                 switch (operation)
                 {
@@ -87,14 +91,21 @@ namespace Kalkulator_Seminarska_Naloga
                 label1.Text = "";
                 result = 0;
                 execute = false;
+                ex = false;
             }
             else
             {
                 label1.Text = "";
                 if (textBox1.Text.Last() == '=')
-                    label1.Text += Evaluate(textBox1.Text.Substring(0, textBox1.Text.Length - 1));
+                {
+                    double evaluate = Evaluate(textBox1.Text.Substring(0, textBox1.Text.Length - 1));
+                    textBox1.Text = evaluate.ToString();
+                }
                 else
-                    label1.Text += Evaluate(textBox1.Text);
+                {
+                    double evaluate = Evaluate(textBox1.Text);
+                    textBox1.Text = evaluate.ToString();
+                }
             }
         }
 
@@ -188,6 +199,11 @@ namespace Kalkulator_Seminarska_Naloga
                         label1.Text += Evaluate(textBox1.Text);
                 }
             }
+        }
+
+        private void buttonDEC_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

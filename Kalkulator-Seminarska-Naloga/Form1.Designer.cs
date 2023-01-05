@@ -301,6 +301,7 @@
             this.buttonDEC.TabIndex = 44;
             this.buttonDEC.Text = "DEC";
             this.buttonDEC.UseVisualStyleBackColor = true;
+            this.buttonDEC.Click += new System.EventHandler(this.buttonDEC_Click);
             // 
             // buttonBIN
             // 
