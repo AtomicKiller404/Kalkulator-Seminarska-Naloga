@@ -301,7 +301,7 @@
             this.buttonDEC.TabIndex = 44;
             this.buttonDEC.Text = "DEC";
             this.buttonDEC.UseVisualStyleBackColor = true;
-            this.buttonDEC.Click += new System.EventHandler(this.buttonDEC_Click);
+            this.buttonDEC.Click += new System.EventHandler(this.convert_click);
             // 
             // buttonBIN
             // 
@@ -313,6 +313,7 @@
             this.buttonBIN.TabIndex = 45;
             this.buttonBIN.Text = "BIN";
             this.buttonBIN.UseVisualStyleBackColor = true;
+            this.buttonBIN.Click += new System.EventHandler(this.convert_click);
             // 
             // buttonOCT
             // 
@@ -324,6 +325,7 @@
             this.buttonOCT.TabIndex = 46;
             this.buttonOCT.Text = "OCT";
             this.buttonOCT.UseVisualStyleBackColor = true;
+            this.buttonOCT.Click += new System.EventHandler(this.convert_click);
             // 
             // buttonHEX
             // 
@@ -335,6 +337,7 @@
             this.buttonHEX.TabIndex = 47;
             this.buttonHEX.Text = "HEX";
             this.buttonHEX.UseVisualStyleBackColor = true;
+            this.buttonHEX.Click += new System.EventHandler(this.convert_click);
             // 
             // textBox1
             // 

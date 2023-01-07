@@ -20,6 +20,7 @@ namespace Kalkulator_Seminarska_Naloga
     {
         double result = 0;
         string operation = "";
+        List<string> convert = new List<string>();
         bool execute = false;
         bool ex = false;
 
@@ -71,27 +72,67 @@ namespace Kalkulator_Seminarska_Naloga
         {
             if (ex)
             {
-                switch (operation)
+                if (operation != null)
                 {
-                    case "+":
-                        textBox1.Text = (result + Double.Parse(textBox1.Text)).ToString();
-                        break;
-                    case "-":
-                        textBox1.Text = (result - Double.Parse(textBox1.Text)).ToString();
-                        break;
-                    case "x":
-                        textBox1.Text = (result * Double.Parse(textBox1.Text)).ToString();
-                        break;
-                    case "/":
-                        textBox1.Text = (result / Double.Parse(textBox1.Text)).ToString();
-                        break;
-                    default:
-                        break;
+                    switch (operation)
+                    {
+                        case "+":
+                            textBox1.Text = (result + Double.Parse(textBox1.Text)).ToString();
+                            break;
+                        case "-":
+                            textBox1.Text = (result - Double.Parse(textBox1.Text)).ToString();
+                            break;
+                        case "x":
+                            textBox1.Text = (result * Double.Parse(textBox1.Text)).ToString();
+                            break;
+                        case "/":
+                            textBox1.Text = (result / Double.Parse(textBox1.Text)).ToString();
+                            break;
+                        default:
+                            break;
+                    }
+                    label1.Text = "";
+                    result = 0;
+                    execute = false;
+                    ex = false;
                 }
-                label1.Text = "";
-                result = 0;
-                execute = false;
-                ex = false;
+                else
+                {
+                    switch (convert[0])
+                    {
+                        case "DEC":
+                            foreach(var i in DEC_convert(convert[1]).AsEnumerable().Reverse())
+                            {
+                                textBox1.Text += i.ToString();
+                            }
+                            break;
+                        case "BIN":
+                            foreach (var i in BIN_convert(convert[1]).AsEnumerable().Reverse())
+                            {
+                                textBox1.Text += i.ToString();
+                            }
+                            break;
+                        case "OCT":
+                            foreach (var i in OCT_convert(convert[1]).AsEnumerable().Reverse())
+                            {
+                                textBox1.Text += i.ToString();
+                            }
+                            break;
+                        case "HEX":
+                            foreach (var i in HEX_convert(convert[1]).AsEnumerable().Reverse())
+                            {
+                                textBox1.Text += i.ToString();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    convert.Clear();
+                    label1.Text = "";
+                    result = 0;
+                    execute = false;
+                    ex = false;
+                }
             }
             else
             {
@@ -109,16 +150,221 @@ namespace Kalkulator_Seminarska_Naloga
             }
         }
 
+        private List<int> DEC_convert(string second)
+        {
+            List<int> bin = new List<int>();
+            List<int> Rconvert = new List<int>();
+            string txt = textBox1.Text.Substring(3, textBox1.Text.Length-6);
+            int res = Convert.ToInt32(txt);
+
+            bin = To_BIN(res);
+            
+            textBox1.Clear();
+            if(second == "BIN")
+            {
+                foreach (var i in bin)
+                {
+                    Rconvert.Add(i);
+                }
+            }
+            else if (second == "OCT")
+            {
+                Rconvert = BIN_convert(3, bin);
+            }
+            else if (second == "HEX")
+            {
+                Rconvert = BIN_convert(4, bin);
+            }
+
+            return Rconvert;
+        }
+
+        private List<int> BIN_convert(string second)
+        {
+            List<int> bin = new List<int>();
+            List<int> Rconvert = new List<int>();
+            string txt = textBox1.Text.Substring(3, textBox1.Text.Length - 6);
+            int res = 0;
+
+            textBox1.Clear();
+            if (second == "DEC")
+            {
+                int index = txt.Length - 1;
+                foreach (char i in txt)
+                {
+                    res = res + (i - '0') * (int)Math.Pow(2, index);
+                    index--;
+                }
+                string s = res.ToString();
+                foreach(char i in s.Reverse())
+                {
+                    Rconvert.Add(i - '0');
+                }
+
+            }
+            else
+            {
+                foreach (char i in txt)
+                {
+                    bin.Add(i - '0');
+                }
+                List<int> Rbin = new List<int>(bin.AsEnumerable().Reverse());
+                if (second == "OCT")
+                {
+                    Rconvert = BIN_convert(3, Rbin);
+                }
+                else if (second == "HEX")
+                {
+                    Rconvert = BIN_convert(4, Rbin);
+                }
+            }
+
+            
+
+            return Rconvert;
+        }
+
+        private List<int> OCT_convert(string second)
+        {
+            List<int> bin = new List<int>();
+            List<int> Rconvert = new List<int>();
+            string txt = textBox1.Text.Substring(3, textBox1.Text.Length - 6);
+            int res = 0;
+
+            textBox1.Clear();
+
+            int index = txt.Length - 1;
+            foreach (char i in txt)
+            {
+                res = res + (i - '0') * (int)Math.Pow(8, index);
+                index--;
+            }
+            string s = res.ToString();
+
+            foreach (char i in s.Reverse())
+            {
+                Rconvert.Add(i - '0');
+            }
+
+            if (second == "DEC")
+            {
+                return Rconvert;
+
+            }
+
+            bin = To_BIN(res);
+            Rconvert = To_BIN(res);
+
+            if (second == "HEX")
+            {
+                Rconvert = BIN_convert(4, bin);
+            }
+
+            return Rconvert;
+        }
+
+        private List<int> HEX_convert(string second)
+        {
+            List<int> bin = new List<int>();
+            List<int> Rconvert = new List<int>();
+            string txt = textBox1.Text.Substring(3, textBox1.Text.Length - 6);
+            int res = 0;
+
+            textBox1.Clear();
+
+            int index = txt.Length - 1;
+            foreach (char i in txt)
+            {
+                res = res + (i - '0') * (int)Math.Pow(16, index);
+                index--;
+            }
+            string s = res.ToString();
+
+            foreach (char i in s.Reverse())
+            {
+                Rconvert.Add(i - '0');
+            }
+
+            if (second == "DEC")
+            {
+                return Rconvert;
+
+            }
+
+            bin = To_BIN(res);
+            Rconvert = To_BIN(res);
+
+            if (second == "OCT")
+            {
+                Rconvert = BIN_convert(3, bin);
+            }
+
+
+            return Rconvert;
+        }
+
+
+        private List<int> BIN_convert(int n, System.Collections.Generic.List<int> bin)
+        {
+            List<int> Rconvert = new List<int>();
+
+            while (bin.Count % n != 0)
+            {
+                bin.Add(0);
+            }
+            //bin.Reverse();
+            for (int i = 0; i < bin.Count / n; i++)
+            {
+                int r = 0;
+                for (int j = i * n; j < i * n + n; j++)
+                {
+                    //4 2 1
+                    //0 0 0
+                    //Prvi bo bil tezisca 4
+                    if (bin[j] == 1)
+                    {
+                        for(int k = 0; k<n; k++)
+                        {
+                            if (j % n == k)
+                            {
+                                r = (int)(r + Math.Pow(2,k));
+                            }
+                        }
+                    }
+                }
+                Rconvert.Add(r);
+            }
+
+            return Rconvert;
+        }
+
+        private List<int> To_BIN(int n)
+        {
+            List<int> bin = new List<int>();
+            int res = n;
+
+            while (res != 0)
+            {
+                bin.Add(res % 2);
+                res = res / 2;
+            }
+
+            return bin;
+        }
+
         private void buttonCE_Click(object sender, EventArgs e)
         {
             textBox1.Text = "0";
             label2.Text = "";
+            convert.Clear();
+
         }
 
         private void buttonC_Click(object sender, EventArgs e)
         {
             textBox1.Text = "0";
             result = 0;
+            convert.Clear();
             label2.Text = "";
         }
 
@@ -201,9 +447,15 @@ namespace Kalkulator_Seminarska_Naloga
             }
         }
 
-        private void buttonDEC_Click(object sender, EventArgs e)
+        private void convert_click(object sender, EventArgs e)
         {
-
+            if (textBox1.Text == "0" || execute == true)
+                textBox1.Clear();
+            textBox1.Text += (sender as Button).Text;
+            execute = false;
+            ex = true;
+            operation = null;
+            convert.Add((sender as Button).Text);
         }
     }
 }
