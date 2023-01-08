@@ -53,8 +53,17 @@
             this.buttonHEX = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.buttonFile = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.backwards = new System.Windows.Forms.Button();
+            this.forward = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.buttonA = new System.Windows.Forms.Button();
+            this.buttonB = new System.Windows.Forms.Button();
+            this.buttonCL = new System.Windows.Forms.Button();
+            this.buttonD = new System.Windows.Forms.Button();
+            this.buttonE = new System.Windows.Forms.Button();
+            this.buttonF = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // backSpace
@@ -63,7 +72,7 @@
             this.backSpace.Location = new System.Drawing.Point(552, 188);
             this.backSpace.Margin = new System.Windows.Forms.Padding(4);
             this.backSpace.Name = "backSpace";
-            this.backSpace.Size = new System.Drawing.Size(93, 192);
+            this.backSpace.Size = new System.Drawing.Size(96, 192);
             this.backSpace.TabIndex = 41;
             this.backSpace.Text = "<---";
             this.backSpace.UseVisualStyleBackColor = true;
@@ -89,7 +98,7 @@
             this.button18.Location = new System.Drawing.Point(451, 390);
             this.button18.Margin = new System.Windows.Forms.Padding(4);
             this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(195, 192);
+            this.button18.Size = new System.Drawing.Size(197, 192);
             this.button18.TabIndex = 39;
             this.button18.Text = "=";
             this.button18.UseVisualStyleBackColor = true;
@@ -342,7 +351,7 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 50.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(41, 64);
+            this.textBox1.Location = new System.Drawing.Point(39, 46);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(607, 83);
             this.textBox1.TabIndex = 49;
@@ -351,18 +360,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(36, 35);
+            this.label1.Location = new System.Drawing.Point(37, 17);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 26);
             this.label1.TabIndex = 50;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(36, 158);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(0, 26);
-            this.label2.TabIndex = 51;
             // 
             // buttonFile
             // 
@@ -376,13 +377,123 @@
             this.buttonFile.UseVisualStyleBackColor = true;
             this.buttonFile.Click += new System.EventHandler(this.buttonFile_Click);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // backwards
+            // 
+            this.backwards.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.5F);
+            this.backwards.Location = new System.Drawing.Point(41, 135);
+            this.backwards.Name = "backwards";
+            this.backwards.Size = new System.Drawing.Size(299, 46);
+            this.backwards.TabIndex = 53;
+            this.backwards.Text = "<";
+            this.backwards.UseVisualStyleBackColor = true;
+            // 
+            // forward
+            // 
+            this.forward.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.5F);
+            this.forward.Location = new System.Drawing.Point(349, 135);
+            this.forward.Name = "forward";
+            this.forward.Size = new System.Drawing.Size(299, 46);
+            this.forward.TabIndex = 54;
+            this.forward.Text = ">";
+            this.forward.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(654, 751);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(138, 30);
+            this.checkBox1.TabIndex = 55;
+            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.Visible = false;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // buttonA
+            // 
+            this.buttonA.Location = new System.Drawing.Point(42, 135);
+            this.buttonA.Name = "buttonA";
+            this.buttonA.Size = new System.Drawing.Size(92, 46);
+            this.buttonA.TabIndex = 56;
+            this.buttonA.Text = "A";
+            this.buttonA.UseVisualStyleBackColor = true;
+            this.buttonA.Visible = false;
+            this.buttonA.Click += new System.EventHandler(this.btn_click);
+            // 
+            // buttonB
+            // 
+            this.buttonB.Location = new System.Drawing.Point(144, 135);
+            this.buttonB.Name = "buttonB";
+            this.buttonB.Size = new System.Drawing.Size(92, 46);
+            this.buttonB.TabIndex = 57;
+            this.buttonB.Text = "B";
+            this.buttonB.UseVisualStyleBackColor = true;
+            this.buttonB.Visible = false;
+            this.buttonB.Click += new System.EventHandler(this.btn_click);
+            // 
+            // buttonCL
+            // 
+            this.buttonCL.Location = new System.Drawing.Point(248, 135);
+            this.buttonCL.Name = "buttonCL";
+            this.buttonCL.Size = new System.Drawing.Size(92, 46);
+            this.buttonCL.TabIndex = 58;
+            this.buttonCL.Text = "C";
+            this.buttonCL.UseVisualStyleBackColor = true;
+            this.buttonCL.Visible = false;
+            this.buttonCL.Click += new System.EventHandler(this.btn_click);
+            // 
+            // buttonD
+            // 
+            this.buttonD.Location = new System.Drawing.Point(350, 135);
+            this.buttonD.Name = "buttonD";
+            this.buttonD.Size = new System.Drawing.Size(92, 46);
+            this.buttonD.TabIndex = 59;
+            this.buttonD.Text = "D";
+            this.buttonD.UseVisualStyleBackColor = true;
+            this.buttonD.Visible = false;
+            this.buttonD.Click += new System.EventHandler(this.btn_click);
+            // 
+            // buttonE
+            // 
+            this.buttonE.Location = new System.Drawing.Point(451, 135);
+            this.buttonE.Name = "buttonE";
+            this.buttonE.Size = new System.Drawing.Size(92, 46);
+            this.buttonE.TabIndex = 60;
+            this.buttonE.Text = "E";
+            this.buttonE.UseVisualStyleBackColor = true;
+            this.buttonE.Visible = false;
+            this.buttonE.Click += new System.EventHandler(this.btn_click);
+            // 
+            // buttonF
+            // 
+            this.buttonF.Location = new System.Drawing.Point(552, 135);
+            this.buttonF.Name = "buttonF";
+            this.buttonF.Size = new System.Drawing.Size(96, 46);
+            this.buttonF.TabIndex = 61;
+            this.buttonF.Text = "F";
+            this.buttonF.UseVisualStyleBackColor = true;
+            this.buttonF.Visible = false;
+            this.buttonF.Click += new System.EventHandler(this.btn_click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(687, 796);
+            this.Controls.Add(this.buttonF);
+            this.Controls.Add(this.buttonE);
+            this.Controls.Add(this.buttonD);
+            this.Controls.Add(this.buttonCL);
+            this.Controls.Add(this.buttonB);
+            this.Controls.Add(this.buttonA);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.forward);
+            this.Controls.Add(this.backwards);
             this.Controls.Add(this.buttonFile);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonHEX);
@@ -444,8 +555,17 @@
         private System.Windows.Forms.Button buttonHEX;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonFile;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button backwards;
+        private System.Windows.Forms.Button forward;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button buttonA;
+        private System.Windows.Forms.Button buttonB;
+        private System.Windows.Forms.Button buttonCL;
+        private System.Windows.Forms.Button buttonD;
+        private System.Windows.Forms.Button buttonE;
+        private System.Windows.Forms.Button buttonF;
     }
 }
 
