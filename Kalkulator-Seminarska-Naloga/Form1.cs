@@ -15,6 +15,8 @@ using Button = System.Windows.Forms.Button;
 using Microsoft.CSharp;
 using static System.Windows.Forms.LinkLabel;
 using System.Threading;
+using System.CodeDom;
+using System.Text.RegularExpressions;
 
 namespace Kalkulator_Seminarska_Naloga
 {
@@ -22,14 +24,23 @@ namespace Kalkulator_Seminarska_Naloga
     {
         double result = 0;
         string operation = ""; // Operation like + - / *
+
         List<string> convert = new List<string>(); // List for opeartions like DEC BIN ...
         bool con = false;
+
         bool execute = false;
         bool ex = false; // Checks if equation was typed in or was it clicked in
+
         bool quit = false; // Check if still reading from file
+
         private ManualResetEvent buttonClickedEvent = new ManualResetEvent(false);
+
         List<string> lines = new List<string>();
-        bool conv = false;
+        int conv = 0;
+
+        List<string> logic_operators = new List<string>();
+        List<string> logic_functions = new List<string>();
+        int index = 0;
 
         public Form1()
         {
@@ -65,71 +76,11 @@ namespace Kalkulator_Seminarska_Naloga
             if (textBox1.Text == "0" || execute == true)
                 textBox1.Clear();
 
-            textBox1.Text += (sender as Button).Text.Substring((sender as Button).Text.IndexOf("(") + 1, ((sender as Button).Text.Length - (sender as Button).Text.IndexOf("(")) - 2); // Adds a number of button in text box
-
-            try
-            {
-                if (result != 0) // If it isnt the first time clicing in
-                {
-                    button18.PerformClick(); // Run button18_Click() function
-                    operation = (sender as Button).Text; // Remember the next operation
-                    result = Double.Parse(textBox1.Text);
-                    label1.Text = result + operation; // Displayes the new result
-                    execute = true; // Checks out that the operator was clicked in
-                    ex = true; // Checl out that it was clicked in
-                }
-                else // If it is the first time
-                {
-                    // The same as above minus the calling of the function
-                    operation = (sender as Button).Text;
-                    //result = Double.Parse(textBox1.Text);
-                    label1.Text = result + operation;
-                    execute = true;
-                    ex = true;
-                }
-            }
-            catch (Exception w)
-            {
-                // If something went wrong throws an exception
-                string message = w.Message;
-                string title = "Warning";
-                MessageBox.Show(message, title);
-            }
-
+            textBox1.Text += (sender as Button).Text.Substring((sender as Button).Text.IndexOf("(") + 1, 
+                ((sender as Button).Text.Length - (sender as Button).Text.IndexOf("(")) - 2); // Adds a logic operator in text box
+            logic_operators.Add((sender as Button).Text.Substring(0, (sender as Button).Text.IndexOf("(") - 1)); // Adds logic operator in list
             execute = false; // Checks out that its not an operation
             ex = true; // Checks out that it was clicked in
-        }
-
-        private void logic_operator_click(object sender, EventArgs e)
-        {    
-            try
-            {
-                if (result != 0) // If it isnt the first time clicing in
-                {
-                    button18.PerformClick(); // Run button18_Click() function
-                    operation = (sender as Button).Text; // Remember the next operation
-                    result = Double.Parse(textBox1.Text);
-                    label1.Text = result + operation; // Displayes the new result
-                    execute = true; // Checks out that the operator was clicked in
-                    ex = true; // Checl out that it was clicked in
-                }
-                else // If it is the first time
-                {
-                    // The same as above minus the calling of the function
-                    operation = (sender as Button).Text;
-                    result = Double.Parse(textBox1.Text);
-                    label1.Text = result + operation;
-                    execute = true;
-                    ex = true;
-                }
-            }
-            catch (Exception w)
-            {
-                // If something went wrong throws an exception
-                string message = w.Message;
-                string title = "Warning";
-                MessageBox.Show(message, title);
-            }        
         }
 
         private void operator_click(object sender, EventArgs e)
@@ -551,6 +502,7 @@ namespace Kalkulator_Seminarska_Naloga
             buttonD.Visible = false;
             buttonE.Visible = false;
             buttonF.Visible = false;
+            first = true;
         }
 
         private void buttonC_Click(object sender, EventArgs e)
@@ -636,42 +588,56 @@ namespace Kalkulator_Seminarska_Naloga
             }
             else if(quit)
             {
+                backwards.Visible = false;
+                forward.Visible = false;
+                buttonFile.Text = "FROM FILE";
+                textBox1.Clear();
+                label1.Text = "";
+                lines.Clear();
                 checkBox1.Checked = false;
                 quit = false;
-                this.buttonFile.Click -= stop;
-                this.buttonFile.Click += buttonFile_Click;
             }
 
         }
 
-        private void stop(object sender, EventArgs e)
-        {
-            quit = true;
-            backwards.Visible = false;
-            forward.Visible = false;
-            buttonFile.Text = "FROM FILE";
-            textBox1.Clear();
-            label1.Text = "";
-            lines.Clear();
-        }
-
-        private void fromFile(int i, List<string> lines, bool conv)
+        private void fromFile(int i, List<string> lines, int conv)
         {
             label1.Text = lines[i];
             string str = "";
-            if (label1.Text.Last() == '=')
-                str = label1.Text.Substring(0, label1.Text.Length - 2);
-            if (!conv)
+            if (label1.Text.Last() == '=') str = label1.Text.Substring(0, label1.Text.Length - 2);
+            else str = label1.Text;
+            if (conv == 0)
             {
                 textBox1.Clear();
                 textBox1.Text += Evaluate(str);
             }
-            else
+            else if(conv == 1)
             {
+                textBox1.Clear();
                 convert.Add(str.Substring(0,3));
                 convert.Add(str.Substring(str.Length - 3, 3));
                 con = true;
                 button18.PerformClick();
+            }
+            else if(conv == 2)
+            {
+                string[,] strings = { { "!", "Ʌ", "V", "X", "N", "A", "=>", "<=" }, { "!", "Ʌ", "V", "V̲", "↓", "↑", "=>", "<=>" }, { "NOT", "AND", "OR", "XOR", "NOR", "NAND", "IMPLY", "XNOR" } };
+
+               // for (int x = 0; x < str.Length; x++)
+               // {
+                    for (int y = 0; y < strings.GetLength(1); y++)
+                    {
+                    //Regex.IsMatch(originalString, pattern)
+                    //str.Contains(strings[0, y])
+                        if (Regex.IsMatch(str, strings[0, y]))
+                        {
+                            logic_operators.Add(strings[2, y]);
+                            label1.Text = str.Replace(strings[0, y], strings[1, y]);
+                        }
+                    }
+                //}
+
+                logic_cal();
             }
         }
 
@@ -740,12 +706,17 @@ namespace Kalkulator_Seminarska_Naloga
                             int index = 1;
                             if (lines[0] == "$")
                             {
-                                conv = false;
+                                conv = 0;
                                 fromFile(index, lines, conv);
                             }
-                            else
+                            else if(lines[0] == "#")
                             {
-                                conv = true;
+                                conv = 1;
+                                fromFile(index, lines, conv);
+                            }
+                            else if(lines[0] == "&")
+                            {
+                                conv = 2;
                                 fromFile(index, lines, conv);
                             }
 
@@ -768,7 +739,6 @@ namespace Kalkulator_Seminarska_Naloga
                                     fromFile(index, lines, conv);
                                 });
                             };
-                            this.buttonFile.Click += stop;
 
                             // start the background thread
                             Task.Run(() =>
@@ -800,6 +770,7 @@ namespace Kalkulator_Seminarska_Naloga
                 buttonNAND.Visible = true;
                 buttonXNOR.Visible = true;
                 buttonIMPLY.Visible = true;
+                buttonEnter2.Visible = true;
 
                 button25.Text = "CALCULATOR";
 
@@ -817,12 +788,213 @@ namespace Kalkulator_Seminarska_Naloga
                 buttonNAND.Visible = false;
                 buttonXNOR.Visible = false;
                 buttonIMPLY.Visible = false;
+                buttonEnter2.Visible = false;
 
-                button25.Text = "CALCULATOR";
+                button25.Text = "LOGIC GATES";
 
                 cal = true;
                 cal = false;
             }
+        }
+
+        private bool toBool(char ch)
+        {
+            if (ch == '1')
+                return true;
+            else if (ch == '0')
+                return false;
+            else
+                throw new ArgumentException("Invalid input");
+        }
+
+        private void equalLength(ref string input1, ref string input2)
+        {
+            if (input1.Length != input2.Length)
+            {
+                if (input1.Length > input2.Length)
+                {
+                    int size = input1.Length - input2.Length;
+                    for (int i = 0; i < size; i++)
+                    {
+                        input2 = input2.Insert(0, "0");
+                    }
+                }
+                else
+                {
+                    int size = input2.Length - input1.Length;
+                    for (int i = 0; i < size; i++)
+                    {
+                        input1 = input1.Insert(0, "0");
+                    }
+                }
+            }
+        }
+
+        private void Not(string inp)
+        {
+            string input = inp.Substring(1, inp.Length - 1);
+            textBox1.Clear();
+            for (int i = 0; i < input.Length; i++)
+            {
+                textBox1.Text += Convert.ToInt16(!toBool(input[i])).ToString();
+            }
+        }
+
+        public void And(string inp)
+        {
+            string input1 = inp.Substring(0, inp.IndexOf("Ʌ"));
+            string input2 = inp.Substring(inp.IndexOf("Ʌ") + 1, inp.Length - inp.IndexOf("Ʌ") - 1);
+            textBox1.Clear();
+
+            equalLength(ref input1, ref input2);
+
+            for (int i = 0; i < input1.Length; i++)
+            {
+                textBox1.Text += (Convert.ToInt16(toBool(input1[i]) && toBool(input2[i]))).ToString();
+            }
+        }
+
+        public void Or(string inp)
+        {
+            string input1 = inp.Substring(0, inp.IndexOf("V"));
+            string input2 = inp.Substring(inp.IndexOf("V") + 1, inp.Length - inp.IndexOf("V") - 1);
+            textBox1.Clear();
+
+            equalLength(ref input1, ref input2);
+
+            for (int i = 0; i < input1.Length; i++)
+            {
+                textBox1.Text += (Convert.ToInt16(toBool(input1[i]) || toBool(input2[i]))).ToString();
+            }
+        }
+
+        public void Xor(string inp)
+        {
+            string input1 = inp.Substring(0, inp.IndexOf("V̲"));
+            string input2 = inp.Substring(inp.IndexOf("V̲") + 2, inp.Length - inp.IndexOf("V̲") - 2);
+            textBox1.Clear();
+
+            equalLength(ref input1, ref input2);
+
+            for (int i = 0; i < input1.Length; i++)
+            {
+                textBox1.Text += (Convert.ToInt16(toBool(input1[i]) ^ toBool(input2[i]))).ToString();
+            }
+        }
+
+        public void Nor(string inp)
+        {
+            string input1 = inp.Substring(0, inp.IndexOf("↓"));
+            string input2 = inp.Substring(inp.IndexOf("↓") + 2, inp.Length - inp.IndexOf("↓") - 2);
+            textBox1.Clear();
+
+            equalLength(ref input1, ref input2);
+
+            for (int i = 0; i < input1.Length; i++)
+            {
+                textBox1.Text += (Convert.ToInt16(!(toBool(input1[i]) || toBool(input2[i])))).ToString();
+            }
+        }
+
+        public void Nand(string inp)
+        {
+            string input1 = inp.Substring(0, inp.IndexOf("↑"));
+            string input2 = inp.Substring(inp.IndexOf("↑") + 2, inp.Length - inp.IndexOf("↑") - 2);
+            textBox1.Clear();
+
+            equalLength(ref input1, ref input2);
+
+            for (int i = 0; i < input1.Length; i++)
+            {
+                textBox1.Text += (Convert.ToInt16(!(toBool(input1[i]) && toBool(input2[i])))).ToString();
+            }
+        }
+
+        public void Imply(string inp)
+        {
+            string input1 = inp.Substring(0, inp.IndexOf("=>"));
+            string input2 = inp.Substring(inp.IndexOf("=>") + 2, inp.Length - inp.IndexOf("=>") - 2);
+            textBox1.Clear();
+
+            equalLength(ref input1, ref input2);
+
+            for (int i = 0; i < input1.Length; i++)
+            {
+                textBox1.Text += (Convert.ToInt16(!toBool(input1[i]) || toBool(input2[i]))).ToString();
+            }
+        }
+
+        public void Xnor(string inp)
+        {
+            string input1 = inp.Substring(0, inp.IndexOf("<=>"));
+            string input2 = inp.Substring(inp.IndexOf("<=>") + 3, inp.Length - inp.IndexOf("<=>") - 3);
+            textBox1.Clear();
+
+            equalLength(ref input1, ref input2);
+
+            for (int i = 0; i < input1.Length; i++)
+            {
+                textBox1.Text += (Convert.ToInt16(!(toBool(input1[i]) ^ toBool(input2[i])))).ToString();
+            }
+        }
+
+        private void logic_cal()
+        {
+            try
+            {
+                string input = "";
+                if (ex) input = textBox1.Text;
+                else input = label1.Text;
+
+                for (int i = 0; i < logic_operators.Count; i++)
+                {
+                    switch (logic_operators[i])
+                    {
+                        case "NOT": // Adds up the numbers
+                            Not(input);
+                            break;
+                        case "AND": // Subtracts the numbers
+                            And(input);
+                            break;
+                        case "OR": // Multiplys the numbers
+                            Or(input);
+                            break;
+                        case "XOR": // Divine the numbers
+                            Xor(input);
+                            break;
+                        case "NOR": // Divine the numbers
+                            Nor(input);
+                            break;
+                        case "NAND": // Divine the numbers
+                            Nand(input);
+                            break;
+                        case "IMPLY": // Divine the numbers
+                            Imply(input);
+                            break;
+                        case "XNOR": // Divine the numbers
+                            Xnor(input);
+                            break;
+                        default:
+                            break;
+
+                    }
+                }
+                
+            }
+            catch (Exception w)
+            {
+                // If something went wrong throws an exception
+                string message = w.Message;
+                string title = "Warning";
+                MessageBox.Show(message, title);
+            }
+            ex = false;
+            logic_operators.Clear();
+        }
+
+        private void buttonEnter2_Click(object sender, EventArgs e)
+        {
+            logic_cal();
         }
     }
 }

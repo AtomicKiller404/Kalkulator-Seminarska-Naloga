@@ -76,6 +76,7 @@
             this.buttonOne = new System.Windows.Forms.Button();
             this.button25 = new System.Windows.Forms.Button();
             this.buttonXNOR = new System.Windows.Forms.Button();
+            this.buttonEnter2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // backSpace
@@ -363,9 +364,9 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 50.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(39, 46);
+            this.textBox1.Location = new System.Drawing.Point(42, 46);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(518, 83);
+            this.textBox1.Size = new System.Drawing.Size(502, 83);
             this.textBox1.TabIndex = 49;
             this.textBox1.Text = "0";
             // 
@@ -493,9 +494,10 @@
             // 
             // buttonNOT
             // 
+            this.buttonNOT.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonNOT.Location = new System.Drawing.Point(41, 187);
             this.buttonNOT.Name = "buttonNOT";
-            this.buttonNOT.Size = new System.Drawing.Size(194, 192);
+            this.buttonNOT.Size = new System.Drawing.Size(194, 193);
             this.buttonNOT.TabIndex = 62;
             this.buttonNOT.Text = "NOT (!)";
             this.buttonNOT.UseVisualStyleBackColor = true;
@@ -504,6 +506,7 @@
             // 
             // buttonAND
             // 
+            this.buttonAND.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonAND.Location = new System.Drawing.Point(247, 188);
             this.buttonAND.Name = "buttonAND";
             this.buttonAND.Size = new System.Drawing.Size(194, 192);
@@ -515,6 +518,7 @@
             // 
             // buttonOR
             // 
+            this.buttonOR.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonOR.Location = new System.Drawing.Point(451, 188);
             this.buttonOR.Name = "buttonOR";
             this.buttonOR.Size = new System.Drawing.Size(197, 192);
@@ -526,9 +530,10 @@
             // 
             // buttonXOR
             // 
-            this.buttonXOR.Location = new System.Drawing.Point(42, 387);
+            this.buttonXOR.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonXOR.Location = new System.Drawing.Point(42, 390);
             this.buttonXOR.Name = "buttonXOR";
-            this.buttonXOR.Size = new System.Drawing.Size(194, 192);
+            this.buttonXOR.Size = new System.Drawing.Size(194, 189);
             this.buttonXOR.TabIndex = 65;
             this.buttonXOR.Text = "XOR (V̲)";
             this.buttonXOR.UseVisualStyleBackColor = true;
@@ -537,9 +542,10 @@
             // 
             // buttonNOR
             // 
-            this.buttonNOR.Location = new System.Drawing.Point(247, 387);
+            this.buttonNOR.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonNOR.Location = new System.Drawing.Point(247, 390);
             this.buttonNOR.Name = "buttonNOR";
-            this.buttonNOR.Size = new System.Drawing.Size(194, 192);
+            this.buttonNOR.Size = new System.Drawing.Size(194, 189);
             this.buttonNOR.TabIndex = 66;
             this.buttonNOR.Text = "NOR (↓)";
             this.buttonNOR.UseVisualStyleBackColor = true;
@@ -548,9 +554,10 @@
             // 
             // buttonNAND
             // 
-            this.buttonNAND.Location = new System.Drawing.Point(451, 387);
+            this.buttonNAND.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonNAND.Location = new System.Drawing.Point(451, 390);
             this.buttonNAND.Name = "buttonNAND";
-            this.buttonNAND.Size = new System.Drawing.Size(197, 192);
+            this.buttonNAND.Size = new System.Drawing.Size(197, 189);
             this.buttonNAND.TabIndex = 67;
             this.buttonNAND.Text = "NAND (↑)";
             this.buttonNAND.UseVisualStyleBackColor = true;
@@ -559,6 +566,7 @@
             // 
             // buttonIMPLY
             // 
+            this.buttonIMPLY.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonIMPLY.Location = new System.Drawing.Point(42, 590);
             this.buttonIMPLY.Name = "buttonIMPLY";
             this.buttonIMPLY.Size = new System.Drawing.Size(298, 120);
@@ -570,6 +578,7 @@
             // 
             // buttonZero
             // 
+            this.buttonZero.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonZero.Location = new System.Drawing.Point(42, 135);
             this.buttonZero.Name = "buttonZero";
             this.buttonZero.Size = new System.Drawing.Size(298, 46);
@@ -581,7 +590,8 @@
             // 
             // buttonOne
             // 
-            this.buttonOne.Location = new System.Drawing.Point(348, 136);
+            this.buttonOne.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonOne.Location = new System.Drawing.Point(350, 136);
             this.buttonOne.Name = "buttonOne";
             this.buttonOne.Size = new System.Drawing.Size(298, 46);
             this.buttonOne.TabIndex = 70;
@@ -592,10 +602,11 @@
             // 
             // button25
             // 
+            this.button25.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.button25.Location = new System.Drawing.Point(563, 46);
+            this.button25.Location = new System.Drawing.Point(552, 46);
             this.button25.Name = "button25";
-            this.button25.Size = new System.Drawing.Size(83, 83);
+            this.button25.Size = new System.Drawing.Size(96, 83);
             this.button25.TabIndex = 71;
             this.button25.Text = "LOGIC GATES";
             this.button25.UseVisualStyleBackColor = true;
@@ -603,6 +614,7 @@
             // 
             // buttonXNOR
             // 
+            this.buttonXNOR.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonXNOR.Location = new System.Drawing.Point(350, 590);
             this.buttonXNOR.Name = "buttonXNOR";
             this.buttonXNOR.Size = new System.Drawing.Size(298, 120);
@@ -612,22 +624,31 @@
             this.buttonXNOR.Visible = false;
             this.buttonXNOR.Click += new System.EventHandler(this.logicgt_click);
             // 
+            // buttonEnter2
+            // 
+            this.buttonEnter2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonEnter2.Location = new System.Drawing.Point(42, 718);
+            this.buttonEnter2.Name = "buttonEnter2";
+            this.buttonEnter2.Size = new System.Drawing.Size(604, 65);
+            this.buttonEnter2.TabIndex = 73;
+            this.buttonEnter2.Text = "ENTER";
+            this.buttonEnter2.UseVisualStyleBackColor = true;
+            this.buttonEnter2.Visible = false;
+            this.buttonEnter2.Click += new System.EventHandler(this.buttonEnter2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(687, 796);
-            this.Controls.Add(this.buttonXNOR);
-            this.Controls.Add(this.button25);
             this.Controls.Add(this.buttonOne);
             this.Controls.Add(this.buttonZero);
-            this.Controls.Add(this.buttonIMPLY);
-            this.Controls.Add(this.buttonNAND);
-            this.Controls.Add(this.buttonNOR);
             this.Controls.Add(this.buttonXOR);
+            this.Controls.Add(this.buttonNOR);
             this.Controls.Add(this.buttonOR);
             this.Controls.Add(this.buttonAND);
             this.Controls.Add(this.buttonNOT);
+            this.Controls.Add(this.button25);
             this.Controls.Add(this.buttonF);
             this.Controls.Add(this.buttonE);
             this.Controls.Add(this.buttonD);
@@ -635,8 +656,6 @@
             this.Controls.Add(this.buttonB);
             this.Controls.Add(this.buttonA);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.forward);
-            this.Controls.Add(this.backwards);
             this.Controls.Add(this.buttonFile);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
@@ -646,7 +665,6 @@
             this.Controls.Add(this.buttonDEC);
             this.Controls.Add(this.backSpace);
             this.Controls.Add(this.button15);
-            this.Controls.Add(this.button18);
             this.Controls.Add(this.buttonC);
             this.Controls.Add(this.buttonCE);
             this.Controls.Add(this.button14);
@@ -663,12 +681,19 @@
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
+            this.Controls.Add(this.buttonXNOR);
+            this.Controls.Add(this.buttonIMPLY);
+            this.Controls.Add(this.buttonNAND);
+            this.Controls.Add(this.backwards);
+            this.Controls.Add(this.forward);
+            this.Controls.Add(this.buttonEnter2);
+            this.Controls.Add(this.button18);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.5F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form1";
-            this.Text = "Kalkulator";
+            this.Text = "Calculator";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -722,6 +747,7 @@
         private System.Windows.Forms.Button buttonOne;
         private System.Windows.Forms.Button button25;
         private System.Windows.Forms.Button buttonXNOR;
+        private System.Windows.Forms.Button buttonEnter2;
     }
 }
 
