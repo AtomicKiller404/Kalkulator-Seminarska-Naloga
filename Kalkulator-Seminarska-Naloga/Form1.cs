@@ -47,6 +47,91 @@ namespace Kalkulator_Seminarska_Naloga
             ex = true; // Checks out that it was clicked in
         }
 
+        bool first = true;
+        private void zeroOne_click(object sender, EventArgs e)
+        {
+            if (execute == true || ((sender as Button).Text == "0" && textBox1.Text == "0") || ((sender as Button).Text == "1" && textBox1.Text == "0" && first))
+            {
+                textBox1.Clear();
+                first = false;
+            }
+            textBox1.Text += (sender as Button).Text; // Adds a number of button in text box
+            execute = false; // Checks out that its not an operation
+            ex = true; // Checks out that it was clicked in
+        }
+
+        private void logicgt_click(object sender, EventArgs e)
+        {
+            if (textBox1.Text == "0" || execute == true)
+                textBox1.Clear();
+
+            textBox1.Text += (sender as Button).Text.Substring((sender as Button).Text.IndexOf("(") + 1, ((sender as Button).Text.Length - (sender as Button).Text.IndexOf("(")) - 2); // Adds a number of button in text box
+
+            try
+            {
+                if (result != 0) // If it isnt the first time clicing in
+                {
+                    button18.PerformClick(); // Run button18_Click() function
+                    operation = (sender as Button).Text; // Remember the next operation
+                    result = Double.Parse(textBox1.Text);
+                    label1.Text = result + operation; // Displayes the new result
+                    execute = true; // Checks out that the operator was clicked in
+                    ex = true; // Checl out that it was clicked in
+                }
+                else // If it is the first time
+                {
+                    // The same as above minus the calling of the function
+                    operation = (sender as Button).Text;
+                    //result = Double.Parse(textBox1.Text);
+                    label1.Text = result + operation;
+                    execute = true;
+                    ex = true;
+                }
+            }
+            catch (Exception w)
+            {
+                // If something went wrong throws an exception
+                string message = w.Message;
+                string title = "Warning";
+                MessageBox.Show(message, title);
+            }
+
+            execute = false; // Checks out that its not an operation
+            ex = true; // Checks out that it was clicked in
+        }
+
+        private void logic_operator_click(object sender, EventArgs e)
+        {    
+            try
+            {
+                if (result != 0) // If it isnt the first time clicing in
+                {
+                    button18.PerformClick(); // Run button18_Click() function
+                    operation = (sender as Button).Text; // Remember the next operation
+                    result = Double.Parse(textBox1.Text);
+                    label1.Text = result + operation; // Displayes the new result
+                    execute = true; // Checks out that the operator was clicked in
+                    ex = true; // Checl out that it was clicked in
+                }
+                else // If it is the first time
+                {
+                    // The same as above minus the calling of the function
+                    operation = (sender as Button).Text;
+                    result = Double.Parse(textBox1.Text);
+                    label1.Text = result + operation;
+                    execute = true;
+                    ex = true;
+                }
+            }
+            catch (Exception w)
+            {
+                // If something went wrong throws an exception
+                string message = w.Message;
+                string title = "Warning";
+                MessageBox.Show(message, title);
+            }        
+        }
+
         private void operator_click(object sender, EventArgs e)
         {
             try
@@ -112,34 +197,44 @@ namespace Kalkulator_Seminarska_Naloga
                 }
                 else // If it is an convertion
                 {
-                    switch (convert[0])
+                    try
                     {
-                        case "DEC": // If the number that is beeing converted is DEC
-                            foreach(var i in DEC_convert(convert[1]).AsEnumerable().Reverse())
-                            {
-                                textBox1.Text += i.ToString();
-                            }
-                            break;
-                        case "BIN": // If the number that is beeing converted is BIN
-                            foreach (var i in BIN_convert(convert[1]).AsEnumerable().Reverse())
-                            {
-                                textBox1.Text += i.ToString();
-                            }
-                            break;
-                        case "OCT": // If the number that is beeing converted is OCT
-                            foreach (var i in OCT_convert(convert[1]).AsEnumerable().Reverse())
-                            {
-                                textBox1.Text += i.ToString();
-                            }
-                            break;
-                        case "HEX": // If the number that is beeing converted is HEX
-                            foreach (var i in HEX_convert(convert[1]).AsEnumerable().Reverse())
-                            {
-                                textBox1.Text += i.ToString();
-                            }
-                            break;
-                        default:
-                            break;
+                        switch (convert[0])
+                        {
+                            case "DEC": // If the number that is beeing converted is DEC
+                                foreach (var i in DEC_convert(convert[1]).AsEnumerable().Reverse())
+                                {
+                                    textBox1.Text += i.ToString();
+                                }
+                                break;
+                            case "BIN": // If the number that is beeing converted is BIN
+                                foreach (var i in BIN_convert(convert[1]).AsEnumerable().Reverse())
+                                {
+                                    textBox1.Text += i.ToString();
+                                }
+                                break;
+                            case "OCT": // If the number that is beeing converted is OCT
+                                foreach (var i in OCT_convert(convert[1]).AsEnumerable().Reverse())
+                                {
+                                    textBox1.Text += i.ToString();
+                                }
+                                break;
+                            case "HEX": // If the number that is beeing converted is HEX
+                                foreach (var i in HEX_convert(convert[1]).AsEnumerable().Reverse())
+                                {
+                                    textBox1.Text += i.ToString();
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    catch(Exception w)
+                    {
+                        // If something went wrong throws an exception
+                        string message = w.Message;
+                        string title = "Warning";
+                        MessageBox.Show(message, title);
                     }
                     // Resets variables
                     convert.Clear();
@@ -687,6 +782,46 @@ namespace Kalkulator_Seminarska_Naloga
                         }
                     }
                 });
+            }
+        }
+
+        bool cal = false;
+        private void button25_Click(object sender, EventArgs e)
+        {
+            if (!cal)
+            {
+                buttonZero.Visible = true;
+                buttonOne.Visible = true;
+                buttonNOT.Visible = true;
+                buttonAND.Visible = true;
+                buttonOR.Visible = true;
+                buttonXOR.Visible = true;
+                buttonNOR.Visible = true;
+                buttonNAND.Visible = true;
+                buttonXNOR.Visible = true;
+                buttonIMPLY.Visible = true;
+
+                button25.Text = "CALCULATOR";
+
+                cal = true;
+            }
+            else
+            {
+                buttonZero.Visible = false;
+                buttonOne.Visible = false;
+                buttonNOT.Visible = false;
+                buttonAND.Visible = false;
+                buttonOR.Visible = false;
+                buttonXOR.Visible = false;
+                buttonNOR.Visible = false;
+                buttonNAND.Visible = false;
+                buttonXNOR.Visible = false;
+                buttonIMPLY.Visible = false;
+
+                button25.Text = "CALCULATOR";
+
+                cal = true;
+                cal = false;
             }
         }
     }
