@@ -499,10 +499,10 @@
             this.buttonNOT.Name = "buttonNOT";
             this.buttonNOT.Size = new System.Drawing.Size(194, 193);
             this.buttonNOT.TabIndex = 62;
-            this.buttonNOT.Text = "NOT (!)";
+            this.buttonNOT.Text = "NOT";
             this.buttonNOT.UseVisualStyleBackColor = true;
             this.buttonNOT.Visible = false;
-            this.buttonNOT.Click += new System.EventHandler(this.logicgt_click);
+            this.buttonNOT.Click += new System.EventHandler(this.btn_click);
             // 
             // buttonAND
             // 
@@ -511,10 +511,10 @@
             this.buttonAND.Name = "buttonAND";
             this.buttonAND.Size = new System.Drawing.Size(194, 192);
             this.buttonAND.TabIndex = 63;
-            this.buttonAND.Text = "AND (Ʌ)";
+            this.buttonAND.Text = "AND";
             this.buttonAND.UseVisualStyleBackColor = true;
             this.buttonAND.Visible = false;
-            this.buttonAND.Click += new System.EventHandler(this.logicgt_click);
+            this.buttonAND.Click += new System.EventHandler(this.btn_click);
             // 
             // buttonOR
             // 
@@ -523,10 +523,10 @@
             this.buttonOR.Name = "buttonOR";
             this.buttonOR.Size = new System.Drawing.Size(197, 192);
             this.buttonOR.TabIndex = 64;
-            this.buttonOR.Text = "OR (V)";
+            this.buttonOR.Text = "OR";
             this.buttonOR.UseVisualStyleBackColor = true;
             this.buttonOR.Visible = false;
-            this.buttonOR.Click += new System.EventHandler(this.logicgt_click);
+            this.buttonOR.Click += new System.EventHandler(this.btn_click);
             // 
             // buttonXOR
             // 
@@ -535,10 +535,10 @@
             this.buttonXOR.Name = "buttonXOR";
             this.buttonXOR.Size = new System.Drawing.Size(194, 189);
             this.buttonXOR.TabIndex = 65;
-            this.buttonXOR.Text = "XOR (V̲)";
+            this.buttonXOR.Text = "XOR";
             this.buttonXOR.UseVisualStyleBackColor = true;
             this.buttonXOR.Visible = false;
-            this.buttonXOR.Click += new System.EventHandler(this.logicgt_click);
+            this.buttonXOR.Click += new System.EventHandler(this.btn_click);
             // 
             // buttonNOR
             // 
@@ -547,10 +547,10 @@
             this.buttonNOR.Name = "buttonNOR";
             this.buttonNOR.Size = new System.Drawing.Size(194, 189);
             this.buttonNOR.TabIndex = 66;
-            this.buttonNOR.Text = "NOR (↓)";
+            this.buttonNOR.Text = "NOR";
             this.buttonNOR.UseVisualStyleBackColor = true;
             this.buttonNOR.Visible = false;
-            this.buttonNOR.Click += new System.EventHandler(this.logicgt_click);
+            this.buttonNOR.Click += new System.EventHandler(this.btn_click);
             // 
             // buttonNAND
             // 
@@ -559,10 +559,10 @@
             this.buttonNAND.Name = "buttonNAND";
             this.buttonNAND.Size = new System.Drawing.Size(197, 189);
             this.buttonNAND.TabIndex = 67;
-            this.buttonNAND.Text = "NAND (↑)";
+            this.buttonNAND.Text = "NAND";
             this.buttonNAND.UseVisualStyleBackColor = true;
             this.buttonNAND.Visible = false;
-            this.buttonNAND.Click += new System.EventHandler(this.logicgt_click);
+            this.buttonNAND.Click += new System.EventHandler(this.btn_click);
             // 
             // buttonIMPLY
             // 
@@ -571,10 +571,10 @@
             this.buttonIMPLY.Name = "buttonIMPLY";
             this.buttonIMPLY.Size = new System.Drawing.Size(298, 120);
             this.buttonIMPLY.TabIndex = 68;
-            this.buttonIMPLY.Text = "IMPLY (=>)";
+            this.buttonIMPLY.Text = "IMPLY";
             this.buttonIMPLY.UseVisualStyleBackColor = true;
             this.buttonIMPLY.Visible = false;
-            this.buttonIMPLY.Click += new System.EventHandler(this.logicgt_click);
+            this.buttonIMPLY.Click += new System.EventHandler(this.btn_click);
             // 
             // buttonZero
             // 
@@ -619,10 +619,10 @@
             this.buttonXNOR.Name = "buttonXNOR";
             this.buttonXNOR.Size = new System.Drawing.Size(298, 120);
             this.buttonXNOR.TabIndex = 72;
-            this.buttonXNOR.Text = "XNOR (<=>)";
+            this.buttonXNOR.Text = "XNOR";
             this.buttonXNOR.UseVisualStyleBackColor = true;
             this.buttonXNOR.Visible = false;
-            this.buttonXNOR.Click += new System.EventHandler(this.logicgt_click);
+            this.buttonXNOR.Click += new System.EventHandler(this.btn_click);
             // 
             // buttonEnter2
             // 

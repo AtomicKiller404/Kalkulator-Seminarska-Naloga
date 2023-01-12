@@ -17,6 +17,8 @@ using static System.Windows.Forms.LinkLabel;
 using System.Threading;
 using System.CodeDom;
 using System.Text.RegularExpressions;
+using System.Linq.Expressions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Kalkulator_Seminarska_Naloga
 {
@@ -67,18 +69,6 @@ namespace Kalkulator_Seminarska_Naloga
                 first = false;
             }
             textBox1.Text += (sender as Button).Text; // Adds a number of button in text box
-            execute = false; // Checks out that its not an operation
-            ex = true; // Checks out that it was clicked in
-        }
-
-        private void logicgt_click(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "0" || execute == true)
-                textBox1.Clear();
-
-            textBox1.Text += (sender as Button).Text.Substring((sender as Button).Text.IndexOf("(") + 1, 
-                ((sender as Button).Text.Length - (sender as Button).Text.IndexOf("(")) - 2); // Adds a logic operator in text box
-            logic_operators.Add((sender as Button).Text.Substring(0, (sender as Button).Text.IndexOf("(") - 1)); // Adds logic operator in list
             execute = false; // Checks out that its not an operation
             ex = true; // Checks out that it was clicked in
         }
@@ -305,18 +295,7 @@ namespace Kalkulator_Seminarska_Naloga
             textBox1.Clear(); // Clears text box
             if (second == "DEC") // If the BIN is converted to DEC
             {
-                int index = txt.Length - 1;
-                foreach (char i in txt)
-                {
-                    res = res + (i - '0') * (int)Math.Pow(2, index); // Math equation for BIN to DEC 
-                    index--;
-                }
-                string s = res.ToString(); // Converts int to string 
-                foreach(char i in s.Reverse()) // So it can be reversed in foreach
-                {
-                    Rconvert.Add(i.ToString());
-                }
-
+                BIN_DEC(txt);
             }
             else
             {
@@ -334,6 +313,25 @@ namespace Kalkulator_Seminarska_Naloga
                 {
                     Rconvert = BIN_convert(4, Rbin);
                 }
+            }
+
+            return Rconvert;
+        }
+
+        private List<string> BIN_DEC(string txt)
+        {
+            List<string> Rconvert = new List<string>();
+            int res = 0;
+            int index = txt.Length - 1; 
+            foreach (char i in txt)
+            {
+                res = res + (i - '0') * (int)Math.Pow(2, index); // Math equation for BIN to DEC 
+                index--;
+            }
+            string s = res.ToString(); // Converts int to string 
+            foreach (char i in s.Reverse()) // So it can be reversed in foreach
+            {
+                Rconvert.Add(i.ToString());
             }
 
             return Rconvert;
@@ -581,9 +579,191 @@ namespace Kalkulator_Seminarska_Naloga
                 // invoke the method and return the result
                 return (double)method.Invoke(null, null);
             }
-            return 0;
+            return 0;          
         }
 
+        int size = 0;
+        bool not = false;
+        private string EvaluateBitwiseExpression(string input)
+        {
+            input = input.Replace(" ", ""); // remove any whitespace
+
+            // define the operators and their precedence
+            Dictionary<string, int> operators = new Dictionary<string, int>()
+            {
+                {"NOT", 6},
+                {"AND", 5},
+                {"OR", 4},
+                {"XOR", 3},
+                {"NAND", 2},
+                {"NOR", 2},
+                {"XNOR", 2},
+                {"IMPLY", 1}
+            };
+
+            // define the stack for the operands and the output queue
+            Stack<string> operands = new Stack<string>();
+            Queue<string> output = new Queue<string>();
+
+            // define the stack for the operators
+            Stack<string> operatorStack = new Stack<string>();
+
+            try
+            {
+                // loop through the input and perform the bitwise operations in order
+                for (int i = 0; i < input.Length; i++)
+                {
+                    char c = input[i];
+                    if (char.IsDigit(c))
+                    {
+                        int start = i;
+                        while (i + 1 < input.Length && (char.IsDigit(input[i + 1]) || input[i + 1] == '.'))
+                        {
+                            i++;
+                        }
+                        size = input.Substring(start, i - start + 1).Length;
+                        output.Enqueue(input.Substring(start, i - start + 1));
+                    }
+                    else if (c == 'A' && input[i + 1] == 'N' && input[i + 2] == 'D')
+                    {
+                        while (operatorStack.Count > 0 && operators[operatorStack.Peek()] >= operators["AND"])
+                        {
+                            output.Enqueue(operatorStack.Pop());
+                        }
+                        operatorStack.Push("AND");
+                    }
+                    else if (c == 'O' && input[i + 1] == 'R' && (input[i - 1] == 'X' || input[i - 1] == 'N'))
+                    {
+                        while (operatorStack.Count > 0 && operators[operatorStack.Peek()] >= operators["OR"])
+                        {
+                            output.Enqueue(operatorStack.Pop());
+                        }
+                        operatorStack.Push("OR");
+                    }
+                    else if (c == 'N' && input[i + 1] == 'O' && input[i + 2] == 'T')
+                    {
+                        operatorStack.Push("NOT");
+                    }
+                    else if (c == 'X' && input[i + 1] == 'O' && input[i + 2] == 'R')
+                    {
+                        while (operatorStack.Count > 0 && operators[operatorStack.Peek()] >= operators["XOR"])
+                        {
+                            output.Enqueue(operatorStack.Pop());
+                        }
+                        operatorStack.Push("XOR");
+                    }
+                    else if (c == 'N' && input[i + 1] == 'A' && input[i + 2] == 'N' && input[i + 3] == 'D')
+                    {
+                        while (operatorStack.Count > 0 && operators[operatorStack.Peek()] >= operators["NAND"])
+                        {
+                            output.Enqueue(operatorStack.Pop());
+                        }
+                        operatorStack.Push("NAND");
+                        i += 3;
+                    }
+                    else if (c == 'N' && input[i + 1] == 'O' && input[i + 2] == 'R')
+                    {
+                        while (operatorStack.Count > 0 && operators[operatorStack.Peek()] >= operators["NOR"])
+                        {
+                            output.Enqueue(operatorStack.Pop());
+                        }
+                        operatorStack.Push("NOR");
+                        i += 2;
+                    }
+                    else if (c == 'X' && input[i + 1] == 'N' && input[i + 2] == 'O' && input[i + 3] == 'R')
+                    {
+                        while (operatorStack.Count > 0 && operators[operatorStack.Peek()] >= operators["XNOR"])
+                        {
+                            output.Enqueue(operatorStack.Pop());
+                        }
+                        operatorStack.Push("XNOR");
+                        i += 3;
+                    }
+                    else if (c == 'X' && input[i + 1] == 'N' && input[i + 2] == 'A' && input[i + 3] == 'N' && input[i + 4] == 'D')
+                    {
+                        while (operatorStack.Count > 0 && operators[operatorStack.Peek()] >= operators["XNAND"])
+                        {
+                            output.Enqueue(operatorStack.Pop());
+                        }
+                        operatorStack.Push("XNAND");
+                        i += 4;
+                    }
+                    else if (c == 'I' && input[i + 1] == 'M' && input[i + 2] == 'P' && input[i + 3] == 'L' && input[i + 4] == 'Y')
+                    {
+                        while (operatorStack.Count > 0 && operators[operatorStack.Peek()] >= operators["IMPLY"])
+                        {
+                            output.Enqueue(operatorStack.Pop());
+                        }
+                        operatorStack.Push("IMPLY");
+                        i += 4;
+                    }
+                }
+
+                // add any remaining operators to the output queue
+                while (operatorStack.Count > 0)
+                {
+                    output.Enqueue(operatorStack.Pop());
+                }
+
+                // evaluate the output queue
+                while (output.Count > 0)
+                {
+                    string next = output.Dequeue();
+                    if (operators.ContainsKey(next))
+                    {
+                        string op2 = operands.Pop();
+                        if (next == "NOT")
+                        {
+                            not = true;
+                            operands.Push(Not(op2));
+                        }
+                        else
+                        {
+                            string op1 = operands.Pop();
+                            switch (next)
+                            {
+                                case "AND":
+                                    operands.Push(And(op1, op2));
+                                    break;
+                                case "OR":
+                                    operands.Push(Or(op1, op2));
+                                    break;
+                                case "XOR":
+                                    operands.Push(Xor(op1, op2));
+                                    break;
+                                case "NAND":
+                                    operands.Push(Nand(op1, op2));
+                                    break;
+                                case "NOR":
+                                    operands.Push(Nor(op1, op2));
+                                    break;
+                                case "XNOR":
+                                    operands.Push(Xnor(op1, op2));
+                                    break;
+                                case "IMPLY":
+                                    operands.Push(Imply(op1, op2));
+                                    break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        operands.Push(next);
+                    }
+                }
+                return operands.Pop();
+            }
+            catch (Exception w)
+            {
+                // If something went wrong throws an exception
+                string message = w.Message;
+                string title = "Warning";
+                MessageBox.Show(message, title);
+            }
+
+            return operands.Pop();
+        }
+    
         private void buttonFile_Click(object sender, EventArgs e)
         {
             if (!quit)
@@ -626,7 +806,7 @@ namespace Kalkulator_Seminarska_Naloga
             }
             else if(conv == 2)
             {
-                string[,] strings = { { "!", "Ʌ", "V", "X", "N", "A", "=>", "<=" }, { "!", "Ʌ", "V", "V̲", "↓", "↑", "=>", "<=>" }, { "NOT", "AND", "OR", "XOR", "NOR", "NAND", "IMPLY", "XNOR" } };
+                string[,] strings = { { "!", "&", "|", "X", "N", "A", "=>", "<=" }, { "!", "Ʌ", "V", "V̲", "↓", "↑", "=>", "<=>" }, { "NOT", "AND", "OR", "XOR", "NOR", "NAND", "IMPLY", "XNOR" } };
 
                // for (int x = 0; x < str.Length; x++)
                // {
@@ -641,8 +821,6 @@ namespace Kalkulator_Seminarska_Naloga
                         }
                     }
                 //}
-
-                logic_cal();
             }
         }
 
@@ -802,14 +980,18 @@ namespace Kalkulator_Seminarska_Naloga
             }
         }
 
-        private bool toBool(char ch)
+        private void buttonEnter2_Click(object sender, EventArgs e)
         {
-            if (ch == '1')
-                return true;
-            else if (ch == '0')
-                return false;
-            else
-                throw new ArgumentException("Invalid input");
+            string input = textBox1.Text;
+            string result = EvaluateBitwiseExpression(input);
+            textBox1.Clear();
+            //if (!not)
+                textBox1.Text = result;
+            //else
+            //{
+            //    textBox1.Text = Convert.ToString(result, 2).Substring(Convert.ToString(result, 2).Length - size);
+            //    not = false;
+            //}
         }
 
         private void equalLength(ref string input1, ref string input2)
@@ -835,113 +1017,127 @@ namespace Kalkulator_Seminarska_Naloga
             }
         }
 
-        private void Not(string inp)
+        private bool toBool(char ch)
         {
-            string input = inp.Substring(1, inp.Length - 1);
-            textBox1.Clear();
+            if (ch == '1')
+                return true;
+            else if (ch == '0')
+                return false;
+            else
+                throw new ArgumentException("Invalid input");
+        }
+
+        private string Not(string input)
+        {
+            string not = "";
+
             for (int i = 0; i < input.Length; i++)
             {
-                textBox1.Text += Convert.ToInt16(!toBool(input[i])).ToString();
+                not += Convert.ToInt16(!toBool(input[i])).ToString();
             }
+
+            return not;
         }
 
-        public void And(string inp)
+        public string And(string input1, string input2)
         {
-            string input1 = inp.Substring(0, inp.IndexOf("Ʌ"));
-            string input2 = inp.Substring(inp.IndexOf("Ʌ") + 1, inp.Length - inp.IndexOf("Ʌ") - 1);
-            textBox1.Clear();
+            string and = "";
 
             equalLength(ref input1, ref input2);
 
             for (int i = 0; i < input1.Length; i++)
             {
-                textBox1.Text += (Convert.ToInt16(toBool(input1[i]) && toBool(input2[i]))).ToString();
+                and += (Convert.ToInt16(toBool(input1[i]) && toBool(input2[i]))).ToString();
             }
+
+            return and;
         }
 
-        public void Or(string inp)
+        public string Or(string input1, string input2)
         {
-            string input1 = inp.Substring(0, inp.IndexOf("V"));
-            string input2 = inp.Substring(inp.IndexOf("V") + 1, inp.Length - inp.IndexOf("V") - 1);
-            textBox1.Clear();
-
+            string or = "";
             equalLength(ref input1, ref input2);
 
             for (int i = 0; i < input1.Length; i++)
             {
-                textBox1.Text += (Convert.ToInt16(toBool(input1[i]) || toBool(input2[i]))).ToString();
+                or += (Convert.ToInt16(toBool(input1[i]) || toBool(input2[i]))).ToString();
             }
+
+            return or;
         }
 
-        public void Xor(string inp)
+        public string Xor(string input1, string input2)
         {
-            string input1 = inp.Substring(0, inp.IndexOf("V̲"));
-            string input2 = inp.Substring(inp.IndexOf("V̲") + 2, inp.Length - inp.IndexOf("V̲") - 2);
-            textBox1.Clear();
-
+            string xor = "";
             equalLength(ref input1, ref input2);
 
             for (int i = 0; i < input1.Length; i++)
             {
-                textBox1.Text += (Convert.ToInt16(toBool(input1[i]) ^ toBool(input2[i]))).ToString();
+                xor += (Convert.ToInt16(toBool(input1[i]) ^ toBool(input2[i]))).ToString();
             }
+
+            return xor;
         }
 
-        public void Nor(string inp)
+        public string Nor(string input1, string input2)
         {
-            string input1 = inp.Substring(0, inp.IndexOf("↓"));
-            string input2 = inp.Substring(inp.IndexOf("↓") + 2, inp.Length - inp.IndexOf("↓") - 2);
-            textBox1.Clear();
-
+            string nor = "";
             equalLength(ref input1, ref input2);
 
             for (int i = 0; i < input1.Length; i++)
             {
-                textBox1.Text += (Convert.ToInt16(!(toBool(input1[i]) || toBool(input2[i])))).ToString();
+                nor += (Convert.ToInt16(!(toBool(input1[i]) || toBool(input2[i])))).ToString();
             }
+
+            return nor;
         }
 
-        public void Nand(string inp)
+        public string Nand(string input1, string input2)
         {
-            string input1 = inp.Substring(0, inp.IndexOf("↑"));
-            string input2 = inp.Substring(inp.IndexOf("↑") + 2, inp.Length - inp.IndexOf("↑") - 2);
-            textBox1.Clear();
-
+            string nand = "";
             equalLength(ref input1, ref input2);
 
             for (int i = 0; i < input1.Length; i++)
             {
-                textBox1.Text += (Convert.ToInt16(!(toBool(input1[i]) && toBool(input2[i])))).ToString();
+                nand += (Convert.ToInt16(!(toBool(input1[i]) && toBool(input2[i])))).ToString();
             }
+
+            return nand;
         }
 
-        public void Imply(string inp)
+        public string Imply(string input1, string input2)
         {
-            string input1 = inp.Substring(0, inp.IndexOf("=>"));
-            string input2 = inp.Substring(inp.IndexOf("=>") + 2, inp.Length - inp.IndexOf("=>") - 2);
-            textBox1.Clear();
-
+            string imply = "";
             equalLength(ref input1, ref input2);
 
             for (int i = 0; i < input1.Length; i++)
             {
-                textBox1.Text += (Convert.ToInt16(!toBool(input1[i]) || toBool(input2[i]))).ToString();
+                imply += (Convert.ToInt16(!toBool(input1[i]) || toBool(input2[i]))).ToString();
             }
+
+            return imply;
         }
 
-        public void Xnor(string inp)
+        public string Xnor(string input1, string input2)
         {
-            string input1 = inp.Substring(0, inp.IndexOf("<=>"));
-            string input2 = inp.Substring(inp.IndexOf("<=>") + 3, inp.Length - inp.IndexOf("<=>") - 3);
-            textBox1.Clear();
-
+            string xnor = "";
             equalLength(ref input1, ref input2);
 
             for (int i = 0; i < input1.Length; i++)
             {
                 textBox1.Text += (Convert.ToInt16(!(toBool(input1[i]) ^ toBool(input2[i])))).ToString();
             }
+
+            return xnor;
         }
+
+        /*
+
+       
+
+        
+
+        
 
         private void logic_cal()
         {
@@ -1000,6 +1196,6 @@ namespace Kalkulator_Seminarska_Naloga
         private void buttonEnter2_Click(object sender, EventArgs e)
         {
             logic_cal();
-        }
+        }*/
     }
 }
