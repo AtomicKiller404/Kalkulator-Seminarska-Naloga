@@ -641,6 +641,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(687, 796);
+            this.Controls.Add(this.buttonXNOR);
+            this.Controls.Add(this.buttonIMPLY);
             this.Controls.Add(this.buttonOne);
             this.Controls.Add(this.buttonZero);
             this.Controls.Add(this.buttonXOR);
@@ -656,7 +658,6 @@
             this.Controls.Add(this.buttonB);
             this.Controls.Add(this.buttonA);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.buttonFile);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonHEX);
@@ -681,13 +682,12 @@
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
-            this.Controls.Add(this.buttonXNOR);
-            this.Controls.Add(this.buttonIMPLY);
             this.Controls.Add(this.buttonNAND);
             this.Controls.Add(this.backwards);
             this.Controls.Add(this.forward);
             this.Controls.Add(this.buttonEnter2);
             this.Controls.Add(this.button18);
+            this.Controls.Add(this.buttonFile);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.5F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

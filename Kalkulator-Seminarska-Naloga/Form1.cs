@@ -546,6 +546,11 @@ namespace Kalkulator_Seminarska_Naloga
                             return Math.Pow(x, y);
                         }
 
+                        public static double mod(double x, double y)
+                        {
+                            return x % y;
+                        }
+
                         public static double Evaluate()
                         {
                             return " + expression + @";
