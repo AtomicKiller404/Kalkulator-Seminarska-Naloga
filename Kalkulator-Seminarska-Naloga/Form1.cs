@@ -51,13 +51,37 @@ namespace Kalkulator_Seminarska_Naloga
             forward.Visible = false;
         }
 
+        bool pow = false;
         private void btn_click(object sender, EventArgs e)
         {
             if (textBox1.Text == "0" || execute == true)
                 textBox1.Clear();
-            textBox1.Text += (sender as Button).Text; // Adds a number of button in text box
+            if ((sender as Button).Name == "buttonPOW" || (sender as Button).Name == "bubuttonMOD")
+            {
+                pow = true;
+            }
+            if (pow)
+            {
+                if ((sender as Button).Name == "button11")
+                {
+                    textBox1.Text += ",";
+                    pow = false;
+                }
+                else
+                {
+                    if ((sender as Button).Name == "buttonPOW" || (sender as Button).Name == "buttonSQRT" || (sender as Button).Name == "buttonMOD")
+                        textBox1.Text += (sender as Button).Text.Substring(0, (sender as Button).Text.Length - 1); // Adds a number of button in text box
+                    else
+                        textBox1.Text += (sender as Button).Text; // Adds a number of button in text box
+                }
+
+            }
+            else
+                textBox1.Text += (sender as Button).Text; // Adds a number of button in text box
+
             execute = false; // Checks out that its not an operation
             ex = true; // Checks out that it was clicked in
+            
         }
 
         bool first = true;
@@ -73,65 +97,17 @@ namespace Kalkulator_Seminarska_Naloga
             ex = true; // Checks out that it was clicked in
         }
 
-        private void operator_click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (result != 0) // If it isnt the first time clicing in
-                {
-                    button18.PerformClick(); // Run button18_Click() function
-                    operation = (sender as Button).Text; // Remember the next operation
-                    result = Double.Parse(textBox1.Text);
-                    label1.Text = result + operation; // Displayes the new result
-                    execute = true; // Checks out that the operator was clicked in
-                    ex = true; // Checl out that it was clicked in
-                }
-                else // If it is the first time
-                {
-                    // The same as above minus the calling of the function
-                    operation = (sender as Button).Text;
-                    result = Double.Parse(textBox1.Text);
-                    label1.Text = result + operation;
-                    execute = true;
-                    ex = true;
-                }
-            }
-            catch (Exception w)
-            {
-                // If something went wrong throws an exception
-                string message = w.Message;
-                string title = "Warning";
-                MessageBox.Show(message, title);
-            }
-
-        }
-
         private void button18_Click(object sender, EventArgs e)
         {
             if (ex) // If it was clicked in 
             {
                 if (operation != null) // If it is an equation
                 {
-                    switch (operation)
-                    {
-                        case "+": // Adds up the numbers
-                            textBox1.Text = (result + Double.Parse(textBox1.Text)).ToString();
-                            break;
-                        case "-": // Subtracts the numbers
-                            textBox1.Text = (result - Double.Parse(textBox1.Text)).ToString();
-                            break;
-                        case "x": // Multiplys the numbers
-                            textBox1.Text = (result * Double.Parse(textBox1.Text)).ToString();
-                            break;
-                        case "/": // Divine the numbers
-                            textBox1.Text = (result / Double.Parse(textBox1.Text)).ToString();
-                            break;
-                        default:
-                            break;
-                    }
+                    label1.Text = textBox1.Text + "=";
+                    double evaluate = Evaluate(textBox1.Text);
+                    textBox1.Text = evaluate.ToString();
 
                     // Resets variables
-                    label1.Text = "";
                     result = 0;
                     execute = false;
                     ex = false;
@@ -501,6 +477,11 @@ namespace Kalkulator_Seminarska_Naloga
             buttonE.Visible = false;
             buttonF.Visible = false;
             first = true;
+            buttonPOW.Visible = true;
+            buttonSQRT.Visible = true;
+            buttonMOD.Visible = true;
+            _button.Visible = true;
+            button_.Visible = true;
         }
 
         private void buttonC_Click(object sender, EventArgs e)
@@ -520,6 +501,18 @@ namespace Kalkulator_Seminarska_Naloga
         {
             if (textBox1.Text.Length > 0)
                 textBox1.Text = textBox1.Text.Substring(0, textBox1.Text.Length - 1);
+
+            buttonA.Visible = false;
+            buttonB.Visible = false;
+            buttonCL.Visible = false;
+            buttonD.Visible = false;
+            buttonE.Visible = false;
+            buttonF.Visible = false;
+            buttonPOW.Visible = true;
+            buttonSQRT.Visible = true;
+            buttonMOD.Visible = true;
+            _button.Visible = true;
+            button_.Visible = true;
         }
 
         private static double Evaluate(string expression)
@@ -806,21 +799,8 @@ namespace Kalkulator_Seminarska_Naloga
             }
             else if(conv == 2)
             {
-                string[,] strings = { { "!", "&", "|", "X", "N", "A", "=>", "<=" }, { "!", "Ʌ", "V", "V̲", "↓", "↑", "=>", "<=>" }, { "NOT", "AND", "OR", "XOR", "NOR", "NAND", "IMPLY", "XNOR" } };
-
-               // for (int x = 0; x < str.Length; x++)
-               // {
-                    for (int y = 0; y < strings.GetLength(1); y++)
-                    {
-                    //Regex.IsMatch(originalString, pattern)
-                    //str.Contains(strings[0, y])
-                        if (Regex.IsMatch(str, strings[0, y]))
-                        {
-                            logic_operators.Add(strings[2, y]);
-                            label1.Text = str.Replace(strings[0, y], strings[1, y]);
-                        }
-                    }
-                //}
+                textBox1.Clear();
+                textBox1.Text += EvaluateBitwiseExpression(str);
             }
         }
 
@@ -850,6 +830,12 @@ namespace Kalkulator_Seminarska_Naloga
                 buttonD.Visible = true;
                 buttonE.Visible = true;
                 buttonF.Visible = true;
+
+                buttonPOW.Visible = false;
+                buttonSQRT.Visible = false;
+                buttonMOD.Visible = false;
+                _button.Visible = false;
+                button_.Visible = false;
             }
         }
 

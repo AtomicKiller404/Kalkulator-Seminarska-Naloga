@@ -77,6 +77,11 @@
             this.button25 = new System.Windows.Forms.Button();
             this.buttonXNOR = new System.Windows.Forms.Button();
             this.buttonEnter2 = new System.Windows.Forms.Button();
+            this.buttonSQRT = new System.Windows.Forms.Button();
+            this.buttonPOW = new System.Windows.Forms.Button();
+            this.buttonMOD = new System.Windows.Forms.Button();
+            this.button_ = new System.Windows.Forms.Button();
+            this._button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // backSpace
@@ -102,7 +107,7 @@
             this.button15.TabIndex = 40;
             this.button15.Text = "/";
             this.button15.UseVisualStyleBackColor = true;
-            this.button15.Click += new System.EventHandler(this.operator_click);
+            this.button15.Click += new System.EventHandler(this.btn_click);
             // 
             // button18
             // 
@@ -150,9 +155,9 @@
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(93, 92);
             this.button14.TabIndex = 36;
-            this.button14.Text = "x";
+            this.button14.Text = "*";
             this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.operator_click);
+            this.button14.Click += new System.EventHandler(this.btn_click);
             // 
             // button13
             // 
@@ -165,7 +170,7 @@
             this.button13.TabIndex = 35;
             this.button13.Text = "-";
             this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.operator_click);
+            this.button13.Click += new System.EventHandler(this.btn_click);
             // 
             // button12
             // 
@@ -178,7 +183,7 @@
             this.button12.TabIndex = 34;
             this.button12.Text = "+";
             this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.operator_click);
+            this.button12.Click += new System.EventHandler(this.btn_click);
             // 
             // button11
             // 
@@ -593,7 +598,7 @@
             this.buttonOne.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonOne.Location = new System.Drawing.Point(350, 136);
             this.buttonOne.Name = "buttonOne";
-            this.buttonOne.Size = new System.Drawing.Size(298, 46);
+            this.buttonOne.Size = new System.Drawing.Size(298, 44);
             this.buttonOne.TabIndex = 70;
             this.buttonOne.Text = "1";
             this.buttonOne.UseVisualStyleBackColor = true;
@@ -636,24 +641,67 @@
             this.buttonEnter2.Visible = false;
             this.buttonEnter2.Click += new System.EventHandler(this.buttonEnter2_Click);
             // 
+            // buttonSQRT
+            // 
+            this.buttonSQRT.Location = new System.Drawing.Point(42, 135);
+            this.buttonSQRT.Name = "buttonSQRT";
+            this.buttonSQRT.Size = new System.Drawing.Size(144, 46);
+            this.buttonSQRT.TabIndex = 74;
+            this.buttonSQRT.Text = "sqrt()";
+            this.buttonSQRT.UseVisualStyleBackColor = true;
+            this.buttonSQRT.Click += new System.EventHandler(this.btn_click);
+            // 
+            // buttonPOW
+            // 
+            this.buttonPOW.Location = new System.Drawing.Point(195, 136);
+            this.buttonPOW.Name = "buttonPOW";
+            this.buttonPOW.Size = new System.Drawing.Size(145, 44);
+            this.buttonPOW.TabIndex = 75;
+            this.buttonPOW.Text = "pow()";
+            this.buttonPOW.UseVisualStyleBackColor = true;
+            this.buttonPOW.Click += new System.EventHandler(this.btn_click);
+            // 
+            // buttonMOD
+            // 
+            this.buttonMOD.Location = new System.Drawing.Point(350, 136);
+            this.buttonMOD.Name = "buttonMOD";
+            this.buttonMOD.Size = new System.Drawing.Size(144, 44);
+            this.buttonMOD.TabIndex = 76;
+            this.buttonMOD.Text = "mod()";
+            this.buttonMOD.UseVisualStyleBackColor = true;
+            this.buttonMOD.Click += new System.EventHandler(this.btn_click);
+            // 
+            // button_
+            // 
+            this.button_.Location = new System.Drawing.Point(500, 136);
+            this.button_.Name = "button_";
+            this.button_.Size = new System.Drawing.Size(71, 44);
+            this.button_.TabIndex = 77;
+            this.button_.Text = "(";
+            this.button_.UseVisualStyleBackColor = true;
+            this.button_.Click += new System.EventHandler(this.btn_click);
+            // 
+            // _button
+            // 
+            this._button.Location = new System.Drawing.Point(577, 136);
+            this._button.Name = "_button";
+            this._button.Size = new System.Drawing.Size(71, 44);
+            this._button.TabIndex = 78;
+            this._button.Text = ")";
+            this._button.UseVisualStyleBackColor = true;
+            this._button.Click += new System.EventHandler(this.btn_click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(687, 796);
-            this.Controls.Add(this.buttonXNOR);
+            this.Controls.Add(this.buttonOR);
+            this.Controls.Add(this.buttonNOT);
             this.Controls.Add(this.buttonIMPLY);
-            this.Controls.Add(this.buttonOne);
             this.Controls.Add(this.buttonZero);
             this.Controls.Add(this.buttonXOR);
-            this.Controls.Add(this.buttonNOR);
-            this.Controls.Add(this.buttonOR);
-            this.Controls.Add(this.buttonAND);
-            this.Controls.Add(this.buttonNOT);
             this.Controls.Add(this.button25);
-            this.Controls.Add(this.buttonF);
-            this.Controls.Add(this.buttonE);
-            this.Controls.Add(this.buttonD);
             this.Controls.Add(this.buttonCL);
             this.Controls.Add(this.buttonB);
             this.Controls.Add(this.buttonA);
@@ -684,10 +732,22 @@
             this.Controls.Add(this.button7);
             this.Controls.Add(this.buttonNAND);
             this.Controls.Add(this.backwards);
-            this.Controls.Add(this.forward);
             this.Controls.Add(this.buttonEnter2);
             this.Controls.Add(this.button18);
             this.Controls.Add(this.buttonFile);
+            this.Controls.Add(this.buttonPOW);
+            this.Controls.Add(this.buttonSQRT);
+            this.Controls.Add(this.buttonXNOR);
+            this.Controls.Add(this.buttonOne);
+            this.Controls.Add(this.forward);
+            this.Controls.Add(this.buttonD);
+            this.Controls.Add(this.buttonE);
+            this.Controls.Add(this.buttonF);
+            this.Controls.Add(this.buttonAND);
+            this.Controls.Add(this.buttonNOR);
+            this.Controls.Add(this.buttonMOD);
+            this.Controls.Add(this.button_);
+            this.Controls.Add(this._button);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.5F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -748,6 +808,11 @@
         private System.Windows.Forms.Button button25;
         private System.Windows.Forms.Button buttonXNOR;
         private System.Windows.Forms.Button buttonEnter2;
+        private System.Windows.Forms.Button buttonSQRT;
+        private System.Windows.Forms.Button buttonPOW;
+        private System.Windows.Forms.Button buttonMOD;
+        private System.Windows.Forms.Button button_;
+        private System.Windows.Forms.Button _button;
     }
 }
 
